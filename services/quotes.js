@@ -17,6 +17,30 @@ const getMultiple = async (page = 1) => {
   };
 };
 
+const validateCreate(quote) => {
+  let messages = [];
+
+  console.log('quote');
+
+  !quote && messages.push('No object is provided');
+
+  !quote.quote && messages.push('Quote is empty');
+
+  !quote.author && messages.push('Author is empty');
+  
+  quote.quote && quote.quote.length > 255 && messages.push('Author is empty');
+  
+  quote.author && quote.author.length > 255 && messages.push('Author is empty');
+
+  if (messages.length) {
+    let error = new Error(messages.join());
+    error.statusCode = 400;
+
+    throw error;
+  }
+
+}
+
 module.exports = {
   getMultiple,
 };
