@@ -38,7 +38,20 @@ const validateCreate(quote) => {
 
     throw error;
   }
+}
 
+const create = async (quote){
+  validateCreate(quote);
+
+  const result = await db.query(
+    'INSERT INTO quote(quote, author) VALUES ($1, $2) RETURNING *',
+    [quote.quote, quote.author]
+  );
+  let message = 'Error in creating quote';
+
+  result.length && (message = 'Quote Created Successfully');
+
+  return {message}
 }
 
 module.exports = {
